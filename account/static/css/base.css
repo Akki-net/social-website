@@ -1,0 +1,19 @@
+div#header {
+    font-size: xx-large;
+    font-family: cursive;
+    padding: 5px 21px;
+    background: silver;
+}
+
+div#content {
+    max-width: 500px;
+    margin: auto;
+    padding: 5px;
+    background: powderblue;
+    position: relative;
+    top: 10px;
+}
+
+#content p, h1{
+    text-align: center;
+}
