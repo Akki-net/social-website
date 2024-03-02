@@ -1,6 +1,9 @@
 {% extends "base.xhtml" %}
+{% load user_tags %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
     <h1>Dashboard</h1>
-    <p>Welcome to your dashboard. You can <a href="{% url "edit" %}">edit your profile</a>.</p>
+    <div>
+        {% show_user request.user %}
+    </div>
 {% endblock %}

@@ -141,3 +141,19 @@ input[type=submit], a.button {
     float:left;
     font-size:13px;
 }
+
+/* profile */
+.bgimg {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+}
+.main{
+    margin-left:0!important;
+    margin-right:0!important
+}
+.padding-large{padding:12px 24px!important}
+.container{padding:0.01em 16px}
+.center{text-align:center!important}
+.jumbo{font-size:64px!important}
