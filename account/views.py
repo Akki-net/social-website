@@ -48,6 +48,7 @@ def user_login(request):
     return render(request, 'account/login.xhtml', {'form': form})
 @login_required
 def edit(request):
+    update = False
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user, data=request.POST)
         profile_form = ProfileEditForm(instance=request.user.profile,
@@ -56,9 +57,11 @@ def edit(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+        update = True
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
     return render(request, 'account/edit.xhtml',
                     {'user_form': user_form,
-                    'profile_form': profile_form})
+                    'profile_form': profile_form,
+                    'update': update})
