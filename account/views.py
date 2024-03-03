@@ -64,4 +64,5 @@ def edit(request):
     return render(request, 'account/edit.xhtml',
                     {'user_form': user_form,
                     'profile_form': profile_form,
-                    'update': update})
+                    'update': update,
+                    'section': 'edit'})

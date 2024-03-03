@@ -10,10 +10,10 @@
             <span class="logo">Bookmarks</span>
             {% if request.user.is_authenticated %}
                 <ul class="menu">
-                    <li>
+                    <li {% if section == "dashboard" %}class="selected"{% endif %}>
                         <a href="{% url 'dashboard' %}">My dashboard</a>
                     </li>
-                    <li>
+                    <li {% if section == "edit" %}class="selected"{% endif %}>
                         <a href="{% url 'edit' %}">Edit</a>
                     </li>
                 </ul>
