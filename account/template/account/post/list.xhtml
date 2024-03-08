@@ -18,4 +18,5 @@
     {% empty %}
     <img style="margin: auto;" src="{% static 'images/Designer.png' %}" />
   {% endfor %}
+  {% include "pagination.xhtml" with page=posts %}
 {% endblock %}

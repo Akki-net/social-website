@@ -210,3 +210,9 @@ img#content_image {
     object-fit: cover;
     object-position: 93% 29%;
 }
+
+/* pagination */
+.pagination { 
+    margin:40px 0; 
+    font-weight:bold;
+}
