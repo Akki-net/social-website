@@ -26,7 +26,8 @@ class Post(models.Model):
         COVID19 = 'CV', 'Covid19'
         IMMUNIZATION = 'IM', 'Immunization'
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250,
+                            unique_for_date='publish')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='blog_posts')
     content = models.TextField()
     category = models.CharField(max_length=2, choices=Category.choices, default=Category.COVID19)
@@ -46,4 +47,7 @@ class Post(models.Model):
         return self.title
     def get_absolute_url(self):
         return reverse('post_detail',
-                       args=[self.id])
+                       args=[self.publish.year,
+                             self.publish.month,
+                             self.publish.day,
+                             self.slug])

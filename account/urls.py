@@ -14,7 +14,7 @@ urlpatterns = [
     path('create-post/', views.create_post, name='create_post'),
     # post views
     path('post-list', views.post_list, name='post_list'),
-    path('post-detail/<int:id>/', views.post_detail, name='post_detail'),
+    path('post-detail/<int:year>/<int:month>/<int:day>/<slug:post>/', views.post_detail, name='post_detail'),
     # change password urls
     path('password-change/', auth_views.PasswordChangeView.as_view(),
          name='password_change'),

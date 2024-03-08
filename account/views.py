@@ -6,6 +6,7 @@ from .forms import LoginForm, UserRegistrationForm, \
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Post
 from django.contrib import messages
+from django.utils.text import slugify
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -75,7 +76,7 @@ def create_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.slug = "-".join(post.title.lower().split())
+            post.slug = slugify(post.title)
             post.save()
             messages.success(request, 'Post created successfully')
         else:
@@ -93,10 +94,13 @@ def post_list(request):
     return render(request,
                  'account/post/list.xhtml',
                  {'posts': posts, 'section': 'feed'})
-def post_detail(request, id):
+def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post,
-                             id=id,
-                             status=Post.Status.PUBLISHED)
+                             status=Post.Status.PUBLISHED,
+                             slug=post,
+                             publish__year=year,
+                             publish__month=month,
+                             publish__day=day)
     return render(request,
                   'account/post/detail.xhtml',
                   {'post': post})
