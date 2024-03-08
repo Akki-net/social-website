@@ -1,8 +1,10 @@
 {% extends "base.xhtml" %}
+{% load static %}
 {% block title %}My Feed{% endblock %}
 {% block content %}
   <h1>My Feed</h1>
   {% for post in posts %}
+    <div>
     <h2>
       <a href="{{ post.get_absolute_url }}">
         {{ post.title }}
@@ -12,5 +14,8 @@
       Published {{ post.publish }} by {{ post.author }}
     </p>
     {{ post.content|truncatewords:30|linebreaks }}
+    </div>
+    {% empty %}
+    <img style="margin: auto;" src="{% static 'images/Designer.png' %}" />
   {% endfor %}
 {% endblock %}

@@ -144,19 +144,6 @@ input[type=submit], a.button {
 }
 
 /* profile */
-.bgimg {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-}
-.main{
-    margin-left:0!important;
-    margin-right:0!important
-}
-.padding-large{padding:12px 24px!important}
-.container{padding:0.01em 16px}
-.center{text-align:center!important}
 .jumbo{font-size:64px!important}
 /* messages */
 ul.messages {
@@ -204,4 +191,22 @@ img#content_image {
     float: right;
     width: 510px;
     margin-left: 10px;
+}
+
+#content img {
+    width: 500px;
+}
+
+#content {
+    padding: 30px 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#profile_photo{
+    border-radius: 49%;
+    height: 500px;
+    object-fit: cover;
+    object-position: 93% 29%;
 }

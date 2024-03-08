@@ -1,22 +1,18 @@
 {% load static %}
-<div style="display:flex; justify-content: space-around;">
-    <div class="sidebar" style="width:35%">
+<div style="display:flex; justify-content: space-around; align-items: center;">
+    <div>
         {% if profile.photo %}
-        <img class="bgimg" src="/media/{{ profile.photo }}" />
+        <img id="profile_photo" src="/media/{{ profile.photo }}" />
         {% else %}
-        <img class="bgimg" src="{% static 'images/avtar.png' %}" />
+        <img src="{% static 'images/avtar.png' %}" />
         {% endif %}
     </div>
-    <div class="main padding-large" style="margin-left:40%">
-        <header class="container center" style="padding:128px 16px" id="home">
-            {% if profile.type_of_user == 'PT' %}
-            <h1> Patient <h1>
-                    {% else %}
-                    <h1>Doctor</h1>
-                    {% endif %}
-                    <h1 class="jumbo"><b>{{ user.first_name }} {{ user.last_name }}</b></h1>
-                    <p>{{ user.email }}</p>
-                    <p>{{ profile.address }}</p>
+    <div>
+        <header>
+            <p style="line-height: 0.8;font-family: cursive;font-size: xx-large;">{% if profile.type_of_user == 'PT' %} Patient  {% else %} Doctor {% endif %}</p>
+            <h1 class="jumbo"><b>{{ user.first_name }} {{ user.last_name }}</b></h1>
+            <p>{{ user.email }}</p>
+            <p>{{ profile.address }}</p>
         </header>
     </div>
 </div>
