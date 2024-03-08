@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile, Post
 from django.contrib import messages
 from django.utils.text import slugify
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -95,7 +95,14 @@ def post_list(request):
     # Pagination with 3 posts per page
     paginator = Paginator(posts, 3)
     page_number = request.GET.get('page', 1)
-    posts = paginator.page(page_number)
+    try:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        # If page_number is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page_number is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
     return render(request,
                  'account/post/list.xhtml',
                  {'posts': posts, 'section': 'feed'})
