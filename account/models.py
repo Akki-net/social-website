@@ -11,6 +11,10 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
     def _str_(self):
         return f'Profile of {self.user.username}'
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()\
+                     .filter(status=Post.Status.PUBLISHED)
 class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
@@ -30,6 +34,8 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    objects = models.Manager() # The default manager.
+    published = PublishedManager() # Our custom manager.
     class Meta:
         ordering = ['-publish']
         indexes = [
