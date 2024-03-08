@@ -16,9 +16,11 @@
                     <li {% if section == "edit" %}class="selected"{% endif %}>
                         <a href="{% url 'edit' %}">Edit</a>
                     </li>
+                    {% if request.user.profile.type_of_user == 'DR' %}
                     <li {% if section == "create" %}class="selected"{% endif %}>
                         <a href="{% url 'create_post' %}">Create Post</a>
                     </li>
+                    {% endif %}
                 </ul>
             {% endif %}
             <span class="user">
