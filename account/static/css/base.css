@@ -199,3 +199,9 @@ ul.messages li a.close {
 .login-form {
     float:left;
 }
+
+img#content_image {
+    float: right;
+    width: 510px;
+    margin-left: 10px;
+}

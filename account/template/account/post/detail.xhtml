@@ -1,0 +1,14 @@
+{% extends "base.xhtml" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p class="date">
+    Published {{ post.publish }} by {{ post.author }}
+  </p>
+  <div>
+      {% if post.image %}
+            <img id="content_image" src="/media/{{ post.image }}" />
+      {% endif %}
+      {{ post.content|linebreaks }}
+  </div>
+{% endblock %}

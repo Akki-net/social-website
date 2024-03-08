@@ -14,7 +14,7 @@ class Profile(models.Model):
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset()\
-                     .filter(status=Post.Status.PUBLISHED)
+                     .filter(status=Post.Status.PUBLISHED, author__profile__type_of_user = 'DR')
 class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'

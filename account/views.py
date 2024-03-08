@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, \
                     UserEditForm, ProfileEditForm, PostForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import Profile, Post
 from django.contrib import messages
 def register(request):
     if request.method == 'POST':
@@ -82,4 +82,21 @@ def create_post(request):
             messages.error(request, 'Error while posting')
     else:
         form = PostForm()
-    return render(request, 'account/create_post.xhtml',{'form': form, 'section': 'create'})
+    return render(request, 'account/post/create_post.xhtml',{'form': form, 'section': 'create'})
+
+@login_required 
+def post_list(request):
+    if request.user.profile.type_of_user == 'DR':
+        posts = request.user.blog_posts.all()
+    else:
+        posts = Post.published.all()
+    return render(request,
+                 'account/post/list.xhtml',
+                 {'posts': posts, 'section': 'feed'})
+def post_detail(request, id):
+    post = get_object_or_404(Post,
+                             id=id,
+                             status=Post.Status.PUBLISHED)
+    return render(request,
+                  'account/post/detail.xhtml',
+                  {'post': post})
