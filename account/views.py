@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile, Post
 from django.contrib import messages
 from django.utils.text import slugify
+from django.core.paginator import Paginator
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -91,6 +92,10 @@ def post_list(request):
         posts = request.user.blog_posts.all()
     else:
         posts = Post.published.all()
+    # Pagination with 3 posts per page
+    paginator = Paginator(post_list, 3)
+    page_number = request.GET.get('page', 1)
+    posts = paginator.page(page_number)
     return render(request,
                  'account/post/list.xhtml',
                  {'posts': posts, 'section': 'feed'})
