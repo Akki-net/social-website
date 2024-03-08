@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Post
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
@@ -37,3 +37,7 @@ class UserRegistrationForm(forms.ModelForm):
         if User.objects.filter(email=data).exists():
             raise forms.ValidationError('Email already in use')
         return data
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['category', 'title', 'content', 'image', 'status']

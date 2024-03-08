@@ -11,6 +11,7 @@ urlpatterns = [
     # dashboard urls
     path('', views.dashboard, name='dashboard'),
     path('edit/', views.edit, name='edit'),
+    path('create-post/', views.create_post, name='create_post'),
     # change password urls
     path('password-change/', auth_views.PasswordChangeView.as_view(),
          name='password_change'),

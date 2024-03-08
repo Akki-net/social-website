@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, \
-                    UserEditForm, ProfileEditForm
+                    UserEditForm, ProfileEditForm, PostForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 from django.contrib import messages
@@ -68,3 +68,18 @@ def edit(request):
                     {'user_form': user_form,
                     'profile_form': profile_form,
                     'section': 'edit'})
+@login_required                
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(data=request.POST,files=request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.slug = "-".join(post.title.lower().split())
+            post.save()
+            messages.success(request, 'Post created successfully')
+        else:
+            messages.error(request, 'Error while posting')
+    else:
+        form = PostForm()
+    return render(request, 'account/create_post.xhtml',{'form': form, 'section': 'create'})
