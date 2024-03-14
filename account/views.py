@@ -4,11 +4,11 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, \
                     UserEditForm, ProfileEditForm, PostForm, AppointmentForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Post
+from .models import Profile, Post, Appointment
 from django.contrib import messages
 from django.utils.text import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 import datetime
 def register(request):
@@ -157,6 +157,7 @@ def make_appointment(request, id):
             appointment.end_time = add_minutes_to_time(appointment.start_time, 45)
             appointment.save()
             messages.success(request, 'Appointment scheduled successfully')
+            return redirect(appointment.get_absolute_url())
         else:
             messages.error(request, 'Error while scheduling')
     else:
@@ -164,3 +165,8 @@ def make_appointment(request, id):
     return render(request, 'account/appointment/appointment_form.xhtml', {
         'form': form
     })
+
+class AppointmentDetail(DetailView):
+    model=Appointment
+    template_name = 'account/appointment/appointment_detail.xhtml'
+    context_object_name = 'appointment_object'

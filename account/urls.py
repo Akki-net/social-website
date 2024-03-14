@@ -32,4 +32,5 @@ urlpatterns = [
     # Appointment
     path('doctor-list/', views.DoctorList.as_view(), name='doctor_list'),
     path('make-appointment/<int:id>', views.make_appointment, name="make_appointment"),
+    path('appointment-detail/<int:pk>', views.AppointmentDetail.as_view(), name="appointment_detail"),
 ]

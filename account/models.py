@@ -54,7 +54,7 @@ class Post(models.Model):
                              self.publish.day,
                              self.slug])
 class Appointment(models.Model):
-    doctor_name = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    doctor_name = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     required_speciality = models.CharField(max_length=2, choices=Post.Category.choices, default=Post.Category.COVID19)
     date_of_appointment = models.DateField(default=datetime.date.today, blank=True)
     start_time = models.TimeField(default=datetime.datetime.now().time(), blank=True)
@@ -64,3 +64,6 @@ class Appointment(models.Model):
         indexes = [
             models.Index(fields=['-date_of_appointment', '-start_time']),
         ]
+    def get_absolute_url(self):
+        return reverse('appointment_detail',
+                       args=[self.id])
