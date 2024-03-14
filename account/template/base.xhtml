@@ -24,6 +24,11 @@
                     <li {% if section == "feed" %}class="selected"{% endif %}>
                         <a href="{% url 'post_list' %}">My feed</a>
                     </li>
+                    {% if request.user.profile.type_of_user == 'PT' %}
+                    <li {% if section == "m_appoint" %}class="selected"{% endif %}>
+                        <a href="{% url 'doctor_list' %}">Make Appointment</a>
+                    </li>
+                    {% endif %}
                 </ul>
             {% endif %}
             <span class="user">

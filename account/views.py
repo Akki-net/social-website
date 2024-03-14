@@ -125,3 +125,8 @@ class DoctorList(ListView):
     template_name = 'account/users/doctor_list.xhtml'
     paginate_by = 3
     context_object_name = 'doctor_list'
+     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['section'] = 'm_appoint'
+        return context
