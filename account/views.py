@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, \
@@ -80,6 +80,8 @@ def create_post(request):
             post.slug = slugify(post.title)
             post.save()
             messages.success(request, 'Post created successfully')
+            # redirect to new created post detail view
+            return redirect(post.get_absolute_url())
         else:
             messages.error(request, 'Error while posting')
     else:
