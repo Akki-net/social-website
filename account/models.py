@@ -59,3 +59,8 @@ class Appointment(models.Model):
     date_of_appointment = models.DateField(default=datetime.date.today, blank=True)
     start_time = models.TimeField(default=timezone.now(), blank=True)
     end_time = models.TimeField(blank=True)
+    class Meta:
+        ordering = ['-date_of_appointment', '-start_time']
+        indexes = [
+            models.Index(fields=['-date_of_appointment', '-start_time']),
+        ]
