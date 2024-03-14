@@ -2,13 +2,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, \
-                    UserEditForm, ProfileEditForm, PostForm
+                    UserEditForm, ProfileEditForm, PostForm, AppointmentForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Post
 from django.contrib import messages
 from django.utils.text import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
+from django.contrib.auth.models import User
+import datetime
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -122,7 +124,7 @@ def post_detail(request, year, month, day, post):
                   {'post': post})
 class DoctorList(ListView):
     queryset = Profile.objects.filter(type_of_user = 'DR')
-    template_name = 'account/users/doctor_list.xhtml'
+    template_name = 'account/appointment/doctor_list.xhtml'
     paginate_by = 3
     context_object_name = 'doctor_list'
      
@@ -130,3 +132,35 @@ class DoctorList(ListView):
         context = super().get_context_data(**kwargs)
         context['section'] = 'm_appoint'
         return context
+
+def add_minutes_to_time(time_obj, minutes):
+    # Convert time to a full datetime object (with a dummy date)
+    full_datetime = datetime.datetime(100, 1, 1, time_obj.hour, time_obj.minute, time_obj.second)
+
+    # Add the specified minutes
+    updated_datetime = full_datetime + datetime.timedelta(minutes=minutes)
+
+    # Extract the time part
+    updated_time = updated_datetime.time()
+
+    return updated_time
+
+@login_required
+def make_appointment(request, id):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            doctor = get_object_or_404(User, id=id)
+            appointment = form.save(commit=False)
+            appointment.doctor_name = doctor      
+            print(appointment.start_time)  
+            appointment.end_time = add_minutes_to_time(appointment.start_time, 45)
+            appointment.save()
+            messages.success(request, 'Appointment scheduled successfully')
+        else:
+            messages.error(request, 'Error while scheduling')
+    else:
+        form = AppointmentForm()
+    return render(request, 'account/appointment/appointment_form.xhtml', {
+        'form': form
+    })

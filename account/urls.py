@@ -31,4 +31,5 @@ urlpatterns = [
          name='password_reset_complete'),
     # Appointment
     path('doctor-list/', views.DoctorList.as_view(), name='doctor_list'),
+    path('make-appointment/<int:id>', views.make_appointment, name="make_appointment"),
 ]

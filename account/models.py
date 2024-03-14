@@ -57,7 +57,7 @@ class Appointment(models.Model):
     doctor_name = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     required_speciality = models.CharField(max_length=2, choices=Post.Category.choices, default=Post.Category.COVID19)
     date_of_appointment = models.DateField(default=datetime.date.today, blank=True)
-    start_time = models.TimeField(default=timezone.now(), blank=True)
+    start_time = models.TimeField(default=datetime.datetime.now().time(), blank=True)
     end_time = models.TimeField(blank=True)
     class Meta:
         ordering = ['-date_of_appointment', '-start_time']

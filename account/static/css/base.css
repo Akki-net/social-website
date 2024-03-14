@@ -238,7 +238,7 @@ img#content_image {
     font-variant: petite-caps;
 }
 
-.doctor-list button {
+.doctor-list a {
     padding: 15px 25px;
     font-size: 24px;
     text-align: center;
@@ -253,9 +253,9 @@ img#content_image {
     align-self: center;
 }
 
-.doctor-list button:hover {background-color: #12c064}
+.doctor-list a:hover {background-color: #12c064}
 
-.doctor-list button:active {
+.doctor-list a:active {
     background-color: #12c064;
     box-shadow: 0 5px #666;
     transform: translateY(4px);

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Post
+from .models import Profile, Post, Appointment
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
@@ -41,3 +41,8 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['category', 'title', 'content', 'image', 'status']
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['required_speciality', 'date_of_appointment', 'start_time']
+      

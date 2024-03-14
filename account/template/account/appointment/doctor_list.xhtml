@@ -15,7 +15,7 @@
         </div>
         <div id="doc-info">
             <h2>{{ doctor.user.first_name.strip }} {{ doctor.user.last_name.strip }}</h2>
-            <button>Make Appointment</button>
+            <a href="{% url 'make_appointment' doctor.user.id %}">Make Appointment</a>
         </div>
     </div>
     {% empty %}
