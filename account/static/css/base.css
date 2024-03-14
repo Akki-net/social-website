@@ -216,3 +216,57 @@ img#content_image {
     margin:40px 0; 
     font-weight:bold;
 }
+
+#doctor_photo{
+    border-radius: 41%;
+    height: 400px;
+    object-fit: cover;
+    object-position: 38% 34%;
+}
+
+.doctor-list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.doctor-list h2 {
+    font-size: 5em;
+    align-self: center;
+    font-family: fantasy;
+    font-variant: petite-caps;
+}
+
+.doctor-list button {
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #1cdf78;
+    border: none;
+    width: 260px;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    align-self: center;
+}
+
+.doctor-list button:hover {background-color: #12c064}
+
+.doctor-list button:active {
+    background-color: #12c064;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+div#doctor-item {
+    margin-top: 50px;
+}
+
+div#doc-info {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}

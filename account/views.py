@@ -8,6 +8,7 @@ from .models import Profile, Post
 from django.contrib import messages
 from django.utils.text import slugify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import ListView
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -61,6 +62,7 @@ def edit(request):
             profile_form.save()
             messages.success(request, 'Profile updated '\
                                       'successfully')
+            return redirect('/account')
         else:
             messages.error(request, 'Error updating your profile')
     else:
@@ -118,3 +120,8 @@ def post_detail(request, year, month, day, post):
     return render(request,
                   'account/post/detail.xhtml',
                   {'post': post})
+class DoctorList(ListView):
+    queryset = Profile.objects.filter(type_of_user = 'DR')
+    template_name = 'account/users/doctor_list.xhtml'
+    paginate_by = 3
+    context_object_name = 'doctor_list'

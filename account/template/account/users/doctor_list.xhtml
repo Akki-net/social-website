@@ -1,0 +1,26 @@
+{% extends "base.xhtml" %}
+{% load static %}
+{% block title %}Doctor's List{% endblock %}
+{% block content %}
+<h1>Doctor's List</h1>
+<div class="doctor-list">
+    {% for doctor in doctor_list %}
+    <div id="doctor-item">
+        <div>
+            {% if doctor.photo %}
+            <img id="doctor_photo" src="/media/{{ doctor.photo }}" />
+            {% else %}
+            <img id="doctor_photo" src="{% static 'images/avtar.png' %}" />
+            {% endif %} 
+        </div>
+        <div id="doc-info">
+            <h2>{{ doctor.user.first_name.strip }} {{ doctor.user.last_name.strip }}</h2>
+            <button>Make Appointment</button>
+        </div>
+    </div>
+    {% empty %}
+        <img style="margin: auto;" src="{% static 'images/Designer.png' %}" />
+    {% endfor %}
+</div>
+{% include "pagination.xhtml" with page=page_obj %}
+{% endblock %}
