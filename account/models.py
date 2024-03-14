@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
+import datetime
+
 class Profile(models.Model):
     class User(models.TextChoices):
         PATIENT = 'PT', 'Patient'
@@ -51,3 +53,9 @@ class Post(models.Model):
                              self.publish.month,
                              self.publish.day,
                              self.slug])
+class Appointment(models.Model):
+    doctor_name = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    required_speciality = models.CharField(max_length=2, choices=Post.Category.choices, default=Post.Category.COVID19)
+    date_of_appointment = models.DateField(default=datetime.date.today, blank=True)
+    start_time = models.TimeField(default=timezone.now(), blank=True)
+    end_time = models.TimeField(blank=True)
