@@ -46,6 +46,9 @@ class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment
         fields = ['required_speciality', 'date_of_appointment', 'start_time']
+    def __init__(self, doctor_id, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.doctor_id = doctor_id
     def clean_date_of_appointment(self):
         app_date = self.cleaned_data['date_of_appointment']
         if app_date < datetime.date.today():
@@ -54,7 +57,7 @@ class AppointmentForm(forms.ModelForm):
     def clean_start_time(self):
         data = dict(self.cleaned_data)
         try:
-            qs = Appointment.objects.filter(date_of_appointment=self.clean_date_of_appointment(),\
+            qs = Appointment.objects.filter(doctor_name__id=self.doctor_id, date_of_appointment=self.clean_date_of_appointment(),\
                                     start_time__lte=data['start_time'], end_time__gte=data['start_time'])
             if qs.exists():
                 raise forms.ValidationError('This time slot is already booked!')

@@ -148,7 +148,7 @@ def add_minutes_to_time(time_obj, minutes):
 @login_required
 def make_appointment(request, id):
     if request.method == 'POST':
-        form = AppointmentForm(request.POST)
+        form = AppointmentForm(data=request.POST, doctor_id=id)
         if form.is_valid():
             doctor = get_object_or_404(User, id=id)
             appointment = form.save(commit=False)
