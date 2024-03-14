@@ -3,7 +3,7 @@
 {% block content %}
     <div>
         <h2>Appointment Details</h2>
-        <p>{{ appointment_object.doctor_name.first_name.strip }} {{ appointment_object.doctor_name.last_name.strip }}</p>
+        <p>Doctor's Name: {{ appointment_object.doctor_name.first_name.strip }} {{ appointment_object.doctor_name.last_name.strip }}</p>
         <p>Date of Appointment: {{ appointment_object.date_of_appointment }}</p>
         <p>Start Time: {{ appointment_object.start_time }}</p>
         <p>End Time: {{ appointment_object.end_time }}</p>

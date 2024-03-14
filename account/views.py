@@ -125,7 +125,7 @@ def post_detail(request, year, month, day, post):
 class DoctorList(ListView):
     queryset = Profile.objects.filter(type_of_user = 'DR')
     template_name = 'account/appointment/doctor_list.xhtml'
-    paginate_by = 3
+    paginate_by = 4
     context_object_name = 'doctor_list'
      
     def get_context_data(self, **kwargs):
