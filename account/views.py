@@ -11,6 +11,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 import datetime
+from .create_calendar_event import create_event
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -133,9 +134,9 @@ class DoctorList(ListView):
         context['section'] = 'm_appoint'
         return context
 
-def add_minutes_to_time(time_obj, minutes):
+def add_minutes_to_time(appdatetime, minutes):
     # Convert time to a full datetime object (with a dummy date)
-    full_datetime = datetime.datetime(100, 1, 1, time_obj.hour, time_obj.minute, time_obj.second)
+    full_datetime = datetime.datetime.combine(appdatetime.date_of_appointment, appdatetime.start_time)
 
     # Add the specified minutes
     updated_datetime = full_datetime + datetime.timedelta(minutes=minutes)
@@ -153,15 +154,15 @@ def make_appointment(request, id):
             doctor = get_object_or_404(User, id=id)
             appointment = form.save(commit=False)
             appointment.doctor_name = doctor      
-            print(appointment.start_time)  
-            appointment.end_time = add_minutes_to_time(appointment.start_time, 45)
+            appointment.end_time = add_minutes_to_time(appointment, 45)
+            create_event(appointment)
             appointment.save()
             messages.success(request, 'Appointment scheduled successfully')
             return redirect(appointment.get_absolute_url())
         else:
             messages.error(request, 'Error while scheduling')
     else:
-        form = AppointmentForm()
+        form = AppointmentForm(doctor_id=id)
     return render(request, 'account/appointment/appointment_form.xhtml', {
         'form': form
     })
